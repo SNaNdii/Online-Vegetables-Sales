@@ -9,5 +9,6 @@ import com.masai.model.Admin;
 public interface AdminDao extends JpaRepository<Admin,Integer>{
 	
 	public Admin findByEmail(String email);
+	public Admin findByName(String email);
 
 }
