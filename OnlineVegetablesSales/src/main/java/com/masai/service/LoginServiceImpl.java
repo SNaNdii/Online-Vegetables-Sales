@@ -39,51 +39,91 @@ public class LoginServiceImpl implements LoginService{
 	@Override
 	public String loginIntoAccount(User user) throws LoginException {
 		
-	 if(user.getRole()==Role.ADMIN)
-	 {
+//	 if(user.getRole()==Role.ADMIN)
+//	 {
+//		
+//			Admin existingAdmin= adminDao.findByEmail(user.getEmailId());
+//			
+//			if(existingAdmin==null)
+//			{
+//				throw new LoginException("Please Enter a valid email id");
+//			}
+//			else
+//			{
+//				Optional<CurrentAdminUserSession> op=adminSessionDao.findById(existingAdmin.getAdminId());
+//				
+//				if(op.isPresent())
+//				{
+//					throw new LoginException("you are already Logged In as an admin");
+//				}
+//				
+//				
+//					if(existingAdmin.getPassword().equals(user.getPassword()))
+//					{
+//						CurrentAdminUserSession current=new CurrentAdminUserSession();
+//						
+//						current.setLocalDateTime(LocalDateTime.now());
+//						
+//						String key=RandomString.make(6);
+//						
+//						current.setUuid(key);
+//						current.setUserId(existingAdmin.getAdminId());
+//						
+//						adminSessionDao.save(current);
+//						
+//						return current.toString();
+//						
+//					}
+//					
+//					
+//						throw new LoginException("Please enter a valid password");
+//				
+//				}
+//				
+//				
+//				
+//			
+//	 }
 		
-			Admin existingAdmin= adminDao.findByEmail(user.getEmailId());
-			
-			if(existingAdmin==null)
-			{
-				throw new LoginException("Please Enter a valid email id");
-			}
-			else
-			{
-				Optional<CurrentAdminUserSession> op=adminSessionDao.findById(existingAdmin.getAdminId());
-				
-				if(op.isPresent())
-				{
-					throw new LoginException("you are already Logged In as an admin");
-				}
-				
-				
-					if(existingAdmin.getPassword().equals(user.getPassword()))
-					{
-						CurrentAdminUserSession current=new CurrentAdminUserSession();
-						
-						current.setLocalDateTime(LocalDateTime.now());
-						
-						String key=RandomString.make(6);
-						
-						current.setUuid(key);
-						current.setUserId(existingAdmin.getAdminId());
-						
-						adminSessionDao.save(current);
-						
-						return current.toString();
-						
-					}
-					
-					
-						throw new LoginException("Please enter a valid password");
-				
-				}
-				
-				
-				
-			
-	 }
+		if (user.getRole() == Role.ADMIN) {
+		    String hardcodedAdminEmail = "singhnandita73@gmail.com";
+		    String hardcodedAdminPassword = "nandi@123";
+
+		    if (!hardcodedAdminEmail.equals(user.getEmailId())) {
+		        throw new LoginException("Please Enter a valid email id");
+		    } else {
+		        Admin existingAdmin = adminDao.findByEmail(hardcodedAdminEmail);
+
+		        if (existingAdmin == null) {
+		            throw new LoginException("Please Enter a valid email id");
+		        } else {
+		            Optional<CurrentAdminUserSession> op = adminSessionDao.findById(existingAdmin.getAdminId());
+
+		            if (op.isPresent()) {
+		                throw new LoginException("You are already Logged In as an admin");
+		            }
+
+		            if (hardcodedAdminPassword.equals(user.getPassword())) {
+		                CurrentAdminUserSession current = new CurrentAdminUserSession();
+
+		                current.setLocalDateTime(LocalDateTime.now());
+
+		                String key = RandomString.make(6);
+
+		                current.setUuid(key);
+		                current.setUserId(existingAdmin.getAdminId());
+
+		                adminSessionDao.save(current);
+
+		                return current.toString();
+		            }
+
+		            throw new LoginException("Please enter a valid password");
+		        }
+		    }
+		}
+		
+		
 	 else if(user.getRole()==Role.CUSTOMER)
 	 {
 		 

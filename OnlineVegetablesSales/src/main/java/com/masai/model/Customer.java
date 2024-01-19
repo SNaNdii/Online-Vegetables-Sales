@@ -39,8 +39,6 @@ public class Customer {
 	private Address address;
 	
 	@Column(unique=true)
-	
-	
     private String email;
 	
     private String password;
